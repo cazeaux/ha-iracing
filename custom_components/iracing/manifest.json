@@ -9,6 +9,7 @@
   "documentation": "https://www.home-assistant.io/integrations/iracing",
   "homekit": {},
   "iot_class": "cloud_polling",
+  "issue_tracker": "https://github.com/cazeaux/ha-iracing/issues",
   "requirements": [],
   "ssdp": [],
   "version": "0.0.1",
