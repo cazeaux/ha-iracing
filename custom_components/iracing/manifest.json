@@ -1,5 +1,4 @@
 {
-  "version": "0.0.1",
   "domain": "iracing",
   "name": "iracing",
   "codeowners": [
@@ -12,5 +11,6 @@
   "iot_class": "cloud_polling",
   "requirements": [],
   "ssdp": [],
+  "version": "0.0.1",
   "zeroconf": []
 }
