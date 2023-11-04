@@ -17,7 +17,7 @@
                     "password": "Password",
                     "username": "Username"
                 },
-                "description": "Enter your connection information"
+                "description": "Enter your iRacing credentials information (asked only the first time), and the customer id of the driver to monitor."
             }
         }
     },
