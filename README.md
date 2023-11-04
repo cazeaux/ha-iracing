@@ -45,3 +45,9 @@ Your credentials are only stored locally on your Home Assistant. They are not us
 | `sensor.DRIVER_NAME_CATEGORY_top5` | total top 5 in the career for the category |
 
 The `CATEGORY` can be: `road`, `dirt_road`, `oval`, `dirt_oval`
+
+## Displaying race results
+
+You can use the [iracing-result-card](https://github.com/cazeaux/iracing-result-card).
+
+![example](doc/example.png)
