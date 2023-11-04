@@ -1,0 +1,103 @@
+{
+    "config": {
+        "abort": {
+            "already_configured": "Device is already configured"
+        },
+        "error": {
+            "cannot_connect": "Failed to connect",
+            "invalid_auth": "Invalid authentication",
+            "unknown": "Unexpected error"
+        },
+        "step": {
+            "user": {
+                "data": {
+                    "cust_id": "iRacing customer ID",
+                    "enable_road": "road",
+                    "host": "Host",
+                    "password": "Password",
+                    "username": "Username"
+                },
+                "description": "Enter your iRacing credentials information (asked only the first time), and the customer id of the driver to monitor."
+            }
+        }
+    },
+    "entity": {
+        "sensor": {
+            "dirt_oval_laps": {
+                "name": "Dirt Oval Laps"
+            },
+            "dirt_oval_licence_ir": {
+                "name": "Dirt Oval iRating"
+            },
+            "dirt_oval_licence_sr": {
+                "name": "Dirt Oval Safety Rating"
+            },
+            "dirt_oval_starts": {
+                "name": "Dirt Oval Starts"
+            },
+            "dirt_oval_top5": {
+                "name": "Dirt Oval Top 5"
+            },
+            "dirt_oval_wins": {
+                "name": "Dirt Oval Wins"
+            },
+            "dirt_road_laps": {
+                "name": "Dirt Road Laps"
+            },
+            "dirt_road_licence_ir": {
+                "name": "Dirt Road iRating"
+            },
+            "dirt_road_licence_sr": {
+                "name": "Dirt Road Safety Rating"
+            },
+            "dirt_road_starts": {
+                "name": "Dirt Road Starts"
+            },
+            "dirt_road_top5": {
+                "name": "Dirt Road Top 5"
+            },
+            "dirt_road_wins": {
+                "name": "Dirt Road Wins"
+            },
+            "driver": {
+                "name": "Driver"
+            },
+            "oval_laps": {
+                "name": "Oval Laps"
+            },
+            "oval_licence_ir": {
+                "name": "Oval iRating"
+            },
+            "oval_licence_sr": {
+                "name": "Oval Safety Rating"
+            },
+            "oval_starts": {
+                "name": "Oval Starts"
+            },
+            "oval_top5": {
+                "name": "Oval Top 5"
+            },
+            "oval_wins": {
+                "name": "Oval Wins"
+            },
+            "road_laps": {
+                "name": "Road Laps"
+            },
+            "road_licence_ir": {
+                "name": "Road iRating"
+            },
+            "road_licence_sr": {
+                "name": "Road Safety Rating"
+            },
+            "road_starts": {
+                "name": "Road Starts"
+            },
+            "road_top5": {
+                "name": "Road Top 5"
+            },
+            "road_wins": {
+                "name": "Road Wins"
+            }
+        }
+    }
+}

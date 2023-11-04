@@ -1,0 +1,16 @@
+{
+  "domain": "iracing",
+  "name": "iracing",
+  "codeowners": [
+    "@cazeaux"
+  ],
+  "config_flow": true,
+  "dependencies": [],
+  "documentation": "https://www.home-assistant.io/integrations/iracing",
+  "homekit": {},
+  "iot_class": "cloud_polling",
+  "requirements": [],
+  "ssdp": [],
+  "version": "0.0.1",
+  "zeroconf": []
+}
