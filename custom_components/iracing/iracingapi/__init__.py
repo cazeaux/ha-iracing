@@ -96,11 +96,11 @@ class irDataClient:
         return self._get_resource("/data/member/get", params=params)
 
     def get_member_career(self, cust_id):
-        params = {"cust_ids": cust_id}
+        params = {"cust_id": cust_id}
         return self._get_resource("/data/stats/member_career", params=params)
 
     def get_recent_results(self, cust_id):
-        params = {"cust_ids": cust_id}
+        params = {"cust_id": cust_id}
         return self._get_resource("/data/stats/member_recent_races", params=params)
 
 
