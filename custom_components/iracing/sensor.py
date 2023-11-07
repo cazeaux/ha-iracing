@@ -61,6 +61,7 @@ SENSOR_TYPES: tuple[IracingSensorEntityDescription, ...] = (
         translation_key="road_licence_ir",
         entity_category=EntityCategory.DIAGNOSTIC,
         value=lambda data: data["road_licence_ir"],
+        state_class=SensorStateClass.MEASUREMENT,
     ),
     IracingSensorEntityDescription(
         key="road_licence_sr",
@@ -68,6 +69,7 @@ SENSOR_TYPES: tuple[IracingSensorEntityDescription, ...] = (
         translation_key="road_licence_sr",
         entity_category=EntityCategory.DIAGNOSTIC,
         value=lambda data: data["road_licence_sr"],
+        state_class=SensorStateClass.MEASUREMENT,
     ),
     IracingSensorEntityDescription(
         key="road_starts",
@@ -108,6 +110,7 @@ SENSOR_TYPES: tuple[IracingSensorEntityDescription, ...] = (
         translation_key="dirt_road_licence_ir",
         entity_category=EntityCategory.DIAGNOSTIC,
         value=lambda data: data["dirt_road_licence_ir"],
+        state_class=SensorStateClass.MEASUREMENT,
     ),
     IracingSensorEntityDescription(
         key="dirt_road_licence_sr",
@@ -115,6 +118,7 @@ SENSOR_TYPES: tuple[IracingSensorEntityDescription, ...] = (
         translation_key="dirt_road_licence_sr",
         entity_category=EntityCategory.DIAGNOSTIC,
         value=lambda data: data["dirt_road_licence_sr"],
+        state_class=SensorStateClass.MEASUREMENT,
     ),
     IracingSensorEntityDescription(
         key="dirt_road_starts",
@@ -155,6 +159,7 @@ SENSOR_TYPES: tuple[IracingSensorEntityDescription, ...] = (
         translation_key="oval_licence_ir",
         entity_category=EntityCategory.DIAGNOSTIC,
         value=lambda data: data["oval_licence_ir"],
+        state_class=SensorStateClass.MEASUREMENT,
     ),
     IracingSensorEntityDescription(
         key="oval_licence_sr",
@@ -162,6 +167,7 @@ SENSOR_TYPES: tuple[IracingSensorEntityDescription, ...] = (
         translation_key="oval_licence_sr",
         entity_category=EntityCategory.DIAGNOSTIC,
         value=lambda data: data["oval_licence_sr"],
+        state_class=SensorStateClass.MEASUREMENT,
     ),
     IracingSensorEntityDescription(
         key="oval_starts",
@@ -202,6 +208,7 @@ SENSOR_TYPES: tuple[IracingSensorEntityDescription, ...] = (
         translation_key="dirt_oval_licence_ir",
         entity_category=EntityCategory.DIAGNOSTIC,
         value=lambda data: data["dirt_oval_licence_ir"],
+        state_class=SensorStateClass.MEASUREMENT,
     ),
     IracingSensorEntityDescription(
         key="dirt_oval_licence_sr",
@@ -209,6 +216,7 @@ SENSOR_TYPES: tuple[IracingSensorEntityDescription, ...] = (
         translation_key="dirt_oval_licence_sr",
         entity_category=EntityCategory.DIAGNOSTIC,
         value=lambda data: data["dirt_oval_licence_sr"],
+        state_class=SensorStateClass.MEASUREMENT,
     ),
     IracingSensorEntityDescription(
         key="dirt_oval_starts",

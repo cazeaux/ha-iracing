@@ -2,13 +2,12 @@
   "config": {
     "step": {
       "user": {
-        "description": "Enter your connection information",
+        "description": "Enter your iRacing credentials (asked only the first time) and the driver customer id of the driver to monitor",
         "data": {
           "host": "[%key:common::config_flow::data::host%]",
           "username": "[%key:common::config_flow::data::username%]",
           "password": "[%key:common::config_flow::data::password%]",
-          "cust_id": "iRacing customer ID",
-          "enable_road": "road"
+          "cust_id": "iRacing customer ID"
         }
       }
     },
