@@ -5,7 +5,7 @@
 ### Using HACS
 
 Add this repository to HACS, then:  
-HACS > Integrations > **Iracing**
+HACS > Integrations > **iRacing**
 
 ### Manual install
 
@@ -16,13 +16,13 @@ Copy the `iracing` folder from latest release to the `custom_components` folder 
 Go to :  
 Settings > Devices & Sevices > Integrations > Add Integration, and search for "Iracing"
 
-You can add as many driver as you want.
+You can add as many drivers as you want.
 
 For the first driver, you are required to enter:
 
-* your iRacing login (email address)
-* your iRacing password
-* The _customer id_ of the driver to monitor
+* Your iRacing login (email address)
+* Your iRacing password
+* The _customer ID_ of the driver to monitor
 
 For the subsequent drivers, you are required to enter only the _customer id_.
 

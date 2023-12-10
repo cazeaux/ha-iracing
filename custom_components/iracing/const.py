@@ -1,4 +1,4 @@
-"""Constants for the iracing integration."""
+"""Constants for the iRacing integration."""
 from typing import Final
 
 DOMAIN = "iracing"
