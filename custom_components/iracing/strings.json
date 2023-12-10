@@ -2,7 +2,7 @@
   "config": {
     "step": {
       "user": {
-        "description": "Enter your iRacing credentials (asked only the first time) and the driver customer id of the driver to monitor",
+        "description": "Enter your iRacing credentials (asked only the first time) and the customer ID of the driver to monitor. This can be found by visiting the My Account page on the iRacing.com Member Site. Look for the five- or six-digit number labeled “Customer ID” in the top-right corner of the page.",
         "data": {
           "host": "[%key:common::config_flow::data::host%]",
           "username": "[%key:common::config_flow::data::username%]",

@@ -1,4 +1,4 @@
-"""Config flow for iracing integration."""
+"""Config flow for iRacing integration."""
 from __future__ import annotations
 
 import logging
@@ -55,7 +55,7 @@ def validate_iracing_credentials(data) -> None:
 
 
 class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
-    """Handle a config flow for iracing."""
+    """Handle a config flow for iRacing."""
 
     VERSION = 1
 

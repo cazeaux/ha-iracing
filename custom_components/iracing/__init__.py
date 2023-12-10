@@ -1,4 +1,4 @@
-"""The iracing integration."""
+"""The iRacing integration."""
 from __future__ import annotations
 
 from homeassistant.config_entries import ConfigEntry
@@ -14,7 +14,7 @@ PLATFORMS: list[Platform] = [Platform.SENSOR]
 
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
-    """Set up iracing from a config entry."""
+    """Set up iRacing from a config entry."""
     hass.data.setdefault(DOMAIN, {})
     hass.data[DOMAIN].setdefault(DATA_CONFIG_ENTRY, {})
 
