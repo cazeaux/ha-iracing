@@ -28,7 +28,12 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         hass.data[DOMAIN][DATA_CONFIG_ENTRY]["password"] = entry.data["password"]
         hass.data[DOMAIN][DATA_CONFIG_ENTRY]["credentials_available"] = True
 
-    coordinator = IracingDataUpdateCoordinator(hass, entry, hass.data[DOMAIN][DATA_CONFIG_ENTRY]["username"], hass.data[DOMAIN][DATA_CONFIG_ENTRY]["password"])
+    coordinator = IracingDataUpdateCoordinator(
+        hass,
+        entry,
+        hass.data[DOMAIN][DATA_CONFIG_ENTRY]["username"],
+        hass.data[DOMAIN][DATA_CONFIG_ENTRY]["password"],
+    )
 
     hass.data[DOMAIN][DATA_CONFIG_ENTRY][entry.entry_id] = coordinator
 
@@ -40,6 +45,6 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
 async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     """Unload a config entry."""
     if unload_ok := await hass.config_entries.async_unload_platforms(entry, PLATFORMS):
-        hass.data[DOMAIN].pop(entry.entry_id)
+        hass.data[DOMAIN][DATA_CONFIG_ENTRY].pop(entry.entry_id)
 
     return unload_ok

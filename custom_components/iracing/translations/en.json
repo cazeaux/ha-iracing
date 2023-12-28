@@ -21,6 +21,23 @@
             }
         }
     },
+    "options": {
+        "step": {
+            "init": {
+                "data": {
+                    "password": "Password",
+                    "username": "Username"
+                },
+                "description": "Enter your iRacing credentials. It will apply to all entities."
+            }
+
+        },
+        "error": {
+            "cannot_connect": "Failed to connect",
+            "invalid_auth": "Invalid authentication",
+            "unknown": "Unexpected error"
+        }
+    },
     "entity": {
         "sensor": {
             "dirt_oval_laps": {

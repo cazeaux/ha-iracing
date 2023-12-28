@@ -14,6 +14,7 @@ class irDataClient:
 
         self.username = username
         self.encoded_password = self._encode_password(username, password)
+        self.car_names = {}
 
     def _encode_password(self, username, password):
         initial_hash = hashlib.sha256(
@@ -44,9 +45,25 @@ class irDataClient:
             response_data = r.json()
             if r.status_code == 200 and response_data.get("authcode"):
                 self.authenticated = True
+                self._get_assets()
                 return "Logged in"
             else:
                 raise IracingAuthError("Error from iRacing: ", response_data)
+
+    def _get_assets(self):
+        self._cars()
+
+    def _add_assets(self, objects, assets, id_key):
+        for obj in objects:
+            a = assets[str(obj[id_key])]
+            for key in a.keys():
+                obj[key] = a[key]
+        return objects
+
+    def _cars(self):
+        cars = self.get_cars()
+        for car in cars:
+            self.car_names[car["car_id"]] = car["car_name"]
 
     def _get_resource_or_link(self, url, params=None):
         if not self.authenticated:
@@ -99,9 +116,15 @@ class irDataClient:
         params = {"cust_id": cust_id}
         return self._get_resource("/data/stats/member_career", params=params)
 
+    def get_cars(self):
+        return self._get_resource("/data/car/get")
+
     def get_recent_results(self, cust_id):
         params = {"cust_id": cust_id}
-        return self._get_resource("/data/stats/member_recent_races", params=params)
+        results = self._get_resource("/data/stats/member_recent_races", params=params)
+        for i, v in enumerate(results["races"]):
+            results["races"][i]["car_name"] = self.car_names[v["car_id"]]
+        return results
 
 
 class IracingConnectionError(Exception):
