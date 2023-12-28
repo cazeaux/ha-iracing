@@ -304,5 +304,5 @@ class IracingSensor(CoordinatorEntity[IracingDataUpdateCoordinator], SensorEntit
     @property
     def extra_state_attributes(self) -> dict[str, Any]:
         """Return the state attributes."""
-        _LOGGER.info(self.coordinator.data)
+        # _LOGGER.info(self.coordinator.data)
         return self.entity_description.attr_fn(self.coordinator.data)
