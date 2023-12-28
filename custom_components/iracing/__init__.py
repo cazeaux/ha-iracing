@@ -28,7 +28,12 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         hass.data[DOMAIN][DATA_CONFIG_ENTRY]["password"] = entry.data["password"]
         hass.data[DOMAIN][DATA_CONFIG_ENTRY]["credentials_available"] = True
 
-    coordinator = IracingDataUpdateCoordinator(hass, entry, hass.data[DOMAIN][DATA_CONFIG_ENTRY]["username"], hass.data[DOMAIN][DATA_CONFIG_ENTRY]["password"])
+    coordinator = IracingDataUpdateCoordinator(
+        hass,
+        entry,
+        hass.data[DOMAIN][DATA_CONFIG_ENTRY]["username"],
+        hass.data[DOMAIN][DATA_CONFIG_ENTRY]["password"],
+    )
 
     hass.data[DOMAIN][DATA_CONFIG_ENTRY][entry.entry_id] = coordinator
 
