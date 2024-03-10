@@ -97,23 +97,41 @@
             "oval_wins": {
                 "name": "Oval Wins"
             },
-            "road_laps": {
-                "name": "Road Laps"
+            "sports_car_laps": {
+                "name": "Sports Car Laps"
             },
-            "road_licence_ir": {
-                "name": "Road iRating"
+            "sports_car_licence_ir": {
+                "name": "Sports Car iRating"
             },
-            "road_licence_sr": {
-                "name": "Road Safety Rating"
+            "sports_car_licence_sr": {
+                "name": "Sports Car Safety Rating"
             },
-            "road_starts": {
-                "name": "Road Starts"
+            "sports_car_starts": {
+                "name": "Sports Car Starts"
             },
-            "road_top5": {
-                "name": "Road Top 5"
+            "sports_car_top5": {
+                "name": "Sports Car Top 5"
             },
-            "road_wins": {
-                "name": "Road Wins"
+            "sports_car_wins": {
+                "name": "Sports Car Wins"
+            },
+            "formula_car_laps": {
+                "name": "Formula Car Laps"
+            },
+            "formula_car_licence_ir": {
+                "name": "Formula Car iRating"
+            },
+            "formula_car_licence_sr": {
+                "name": "Formula Car Safety Rating"
+            },
+            "formula_car_starts": {
+                "name": "Formula Car Starts"
+            },
+            "formula_car_top5": {
+                "name": "Formula Car Top 5"
+            },
+            "formula_car_wins": {
+                "name": "Formula Car Wins"
             }
         }
     }
