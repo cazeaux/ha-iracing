@@ -111,6 +111,42 @@
       },
       "driver": {
         "name": "Driver"
+      },
+      "sports_car_laps": {
+          "name": "Sports Car Laps"
+      },
+      "sports_car_licence_ir": {
+          "name": "Sports Car iRating"
+      },
+      "sports_car_licence_sr": {
+          "name": "Sports Car Safety Rating"
+      },
+      "sports_car_starts": {
+          "name": "Sports Car Starts"
+      },
+      "sports_car_top5": {
+          "name": "Sports Car Top 5"
+      },
+      "sports_car_wins": {
+          "name": "Sports Car Wins"
+      },
+      "formula_car_laps": {
+          "name": "Formula Car Laps"
+      },
+      "formula_car_licence_ir": {
+          "name": "Formula Car iRating"
+      },
+      "formula_car_licence_sr": {
+          "name": "Formula Car Safety Rating"
+      },
+      "formula_car_starts": {
+          "name": "Formula Car Starts"
+      },
+      "formula_car_top5": {
+          "name": "Formula Car Top 5"
+      },
+      "formula_car_wins": {
+          "name": "Formula Car Wins"
       }
     }
   }
