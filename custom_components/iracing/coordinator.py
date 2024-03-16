@@ -11,16 +11,10 @@ from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import Platform
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator
-from .iracingapi import irDataClient
 
 from .const import DEFAULT_REFRESH_INTERVAL
 
 _LOGGER = logging.getLogger(__name__)
-
-
-def get_iracing_client(username, password) -> irDataClient | None:
-    client = irDataClient(username, password)
-    return client
 
 
 class IracingDataUpdateCoordinator(DataUpdateCoordinator):
@@ -28,9 +22,7 @@ class IracingDataUpdateCoordinator(DataUpdateCoordinator):
 
     config_entry: ConfigEntry
 
-    def __init__(
-        self, hass: HomeAssistant, entry: ConfigEntry, username: str, password: str
-    ) -> None:
+    def __init__(self, hass: HomeAssistant, entry: ConfigEntry, api) -> None:
         """Initialize the coordinator."""
         super().__init__(
             hass=hass,
@@ -41,8 +33,7 @@ class IracingDataUpdateCoordinator(DataUpdateCoordinator):
             ),
         )
         self.config_entry = entry
-        self.username = username
-        self.password = password
+        self.api = api
 
     async def _async_update_data(self) -> dict[Platform, dict[str, Any]]:
         """Get the latest data from iRacing and updates the state."""
@@ -83,9 +74,7 @@ class IracingDataUpdateCoordinator(DataUpdateCoordinator):
             "name": None,
         }
 
-        client = await self.hass.async_add_executor_job(
-            get_iracing_client, self.username, self.password
-        )
+        client = self.api
 
         if client is None:
             _LOGGER.error("Unable to init iracing client")

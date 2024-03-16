@@ -155,7 +155,7 @@ SENSOR_TYPES: tuple[IracingSensorEntityDescription, ...] = (
     ),
     ### DIRT ROAD
     IracingSensorEntityDescription(
-        key="oval_licence_ir",
+        key="dirt_road_licence_ir",
         icon="mdi:trophy-variant",
         translation_key="dirt_road_licence_ir",
         entity_category=EntityCategory.DIAGNOSTIC,
