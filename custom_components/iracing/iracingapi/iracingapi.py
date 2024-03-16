@@ -7,7 +7,7 @@ import requests
 
 
 class irDataClient:
-    def __init__(self, username=None, password=None):
+    def __init__(self, username=None, password=None, logger=None):
         self.authenticated = False
         self.session = requests.Session()
         self.base_url = "https://members-ng.iracing.com"
@@ -15,6 +15,16 @@ class irDataClient:
         self.username = username
         self.encoded_password = self._encode_password(username, password)
         self.car_names = {}
+        self.authenticating = False
+        self.logger = logger
+
+    def log_error(self, message):
+        if self.logger:
+            self.logger.error(message)
+
+    def log_info(self, message):
+        if self.logger:
+            self.logger.info(message)
 
     def _encode_password(self, username, password):
         initial_hash = hashlib.sha256(
@@ -29,8 +39,19 @@ class irDataClient:
     def _login(self):
         headers = {"Content-Type": "application/json"}
         data = {"email": self.username, "password": self.encoded_password}
+        if self.authenticating:
+            self.log_info("Authenticating in progress, waiting")
 
+            for _ in range(10):
+                time.sleep(2)
+                if not self.authenticating:
+                    self.log_info("Authenticating done, continuing")
+                    break
+
+        if self.authenticated:
+            return
         try:
+            self.authenticating = True
             r = self.session.post(
                 "https://members-ng.iracing.com/auth",
                 headers=headers,
@@ -45,9 +66,11 @@ class irDataClient:
             response_data = r.json()
             if r.status_code == 200 and response_data.get("authcode"):
                 self.authenticated = True
+                self.authenticating = False
                 self._get_assets()
-                return "Logged in"
+                self.log_info("Successful login")
             else:
+                self.log_error("Failed login, status: " + str(r.status_code))
                 raise IracingAuthError("Error from iRacing: ", response_data)
 
     def _get_assets(self):
@@ -78,16 +101,20 @@ class irDataClient:
             return self._get_resource_or_link(url, params=params)
 
         if r.status_code == 429:
-            print("Rate limited, waiting")
+            self.log_info("Rate limited, waiting...")
+
             ratelimit_reset = r.headers.get("x-ratelimit-reset")
             if ratelimit_reset:
                 reset_datetime = datetime.fromtimestamp(int(ratelimit_reset))
                 delta = reset_datetime - datetime.now()
                 if delta.total_seconds() > 0:
                     time.sleep(delta.total_seconds())
+            self.log_info("Rate limited, end of wait")
             return self._get_resource_or_link(url, params=params)
 
         if r.status_code != 200:
+            self.log_error("API for " + url + "answsered " + str(r.status_code))
+
             raise RuntimeError("Unhandled Non-200 response", r)
         data = r.json()
         if not isinstance(data, list) and "link" in data.keys():
