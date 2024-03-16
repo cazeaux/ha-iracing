@@ -10,6 +10,9 @@ class irDataClient:
     def __init__(self, username=None, password=None, logger=None):
         self.authenticated = False
         self.session = requests.Session()
+        adapter = requests.adapters.HTTPAdapter(pool_connections=30, pool_maxsize=30)
+        self.session.mount("https://", adapter)
+
         self.base_url = "https://members-ng.iracing.com"
 
         self.username = username
@@ -117,6 +120,7 @@ class irDataClient:
 
             raise RuntimeError("Unhandled Non-200 response", r)
         data = r.json()
+        r.close()
         if not isinstance(data, list) and "link" in data.keys():
             return [data.get("link"), True]
         else:
@@ -128,6 +132,7 @@ class irDataClient:
         if not is_link:
             return resource_obj
         r = self.session.get(resource_obj)
+        r.close()
         if r.status_code != 200:
             raise RuntimeError("Unhandled Non-200 response", r)
         return r.json()
