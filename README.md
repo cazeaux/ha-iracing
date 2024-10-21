@@ -1,6 +1,6 @@
 # iRacing integration for Home Assistant
 
-## Enable Read Only Authentication in your iRacing authentication
+## Enable Read Only Authentication in your iRacing account
 
 Like any apps using the iRacing API, you need to activat the Read Only Authentication in your iRacing account. For more information: https://support.iracing.com/support/solutions/articles/31000173894-enabling-or-disabling-legacy-read-only-authentication
 
