@@ -1,10 +1,14 @@
 # iRacing integration for Home Assistant
 
-## Enable Read Only Authentication in your iRacing account
+## ⚠ BREAKING CHANGE since iRacing 2026S1
 
-Like any apps using the iRacing API, you need to activat the Read Only Authentication in your iRacing account. For more information: https://support.iracing.com/support/solutions/articles/31000173894-enabling-or-disabling-legacy-read-only-authentication
+The legacy authentification is now removed in iRacing. See more information here: https://forums.iracing.com/discussion/84226/legacy-authentication-removal-dec-9-2025/p1
 
-This parameter has been added in October 2024, and is disabled by default.
+To use this integration, you must request to the iRacing staff a **client ID** and **client secret**. Currently, the request must be sent by mail as described here: https://oauth.iracing.com/oauth2/book/password_limited_flow.html
+
+In you request, you can mention that you need the credentials to run a the Home Assistant integration for your own usage.
+
+Note that even with the password_limited flow, the iRacing OAuth authentication still requires your iRacing credentials.
 
 ## Installation
 
@@ -28,6 +32,8 @@ For the first driver, you are required to enter:
 
 - Your iRacing login (email address)
 - Your iRacing password
+- Your client ID (obtained from iRacing staff, see above)
+- Your client secret (obtained from iRacing staff, see above)
 - The _customer ID_ of the driver to monitor
 
 For the subsequent drivers, you are only required to enter the _customer ID_.
