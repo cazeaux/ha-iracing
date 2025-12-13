@@ -3,23 +3,25 @@
 from __future__ import annotations
 
 import logging
+
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import Platform
 from homeassistant.core import HomeAssistant
+
+from .const import DATA_CONFIG_ENTRY, DOMAIN
+from .coordinator import IracingDataUpdateCoordinator
 from .iracingapi import irDataClient
 
-from .const import DOMAIN, DATA_CONFIG_ENTRY
-from .coordinator import IracingDataUpdateCoordinator
-
-# TODO List the platforms that you want to support.
 # For your initial PR, limit it to 1 platform.
 PLATFORMS: list[Platform] = [Platform.SENSOR]
 _LOGGER = logging.getLogger(__name__)
 
 
-def get_iracing_client(username, password) -> irDataClient | None:
-    client = irDataClient(username, password, _LOGGER)
-    return client
+def get_iracing_client(
+    username, password, client_id, client_secret
+) -> irDataClient | None:
+    """Get an authenticated iRacing client."""
+    return irDataClient(username, password, client_id, client_secret, _LOGGER)
 
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
@@ -30,10 +32,17 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     if "username" in entry.data:
         hass.data[DOMAIN][DATA_CONFIG_ENTRY]["username"] = entry.data["username"]
         hass.data[DOMAIN][DATA_CONFIG_ENTRY]["password"] = entry.data["password"]
+        hass.data[DOMAIN][DATA_CONFIG_ENTRY]["client_id"] = entry.data["client_id"]
+        hass.data[DOMAIN][DATA_CONFIG_ENTRY]["client_secret"] = entry.data[
+            "client_secret"
+        ]
         hass.data[DOMAIN][DATA_CONFIG_ENTRY]["credentials_available"] = True
 
         hass.data[DOMAIN][DATA_CONFIG_ENTRY]["api"] = get_iracing_client(
-            entry.data["username"], entry.data["password"]
+            entry.data["username"],
+            entry.data["password"],
+            entry.data["client_id"],
+            entry.data["client_secret"],
         )
 
     coordinator = IracingDataUpdateCoordinator(

@@ -6,25 +6,21 @@ import logging
 from typing import Any
 
 import voluptuous as vol
-import requests
+
 from homeassistant import config_entries
-from homeassistant.core import HomeAssistant
-from homeassistant.data_entry_flow import FlowResult
+from homeassistant.core import callback
 from homeassistant.exceptions import HomeAssistantError
-from .iracingapi import irDataClient, IracingConnectionError, IracingAuthError
-from homeassistant.exceptions import ConfigEntryAuthFailed
 from homeassistant.helpers.selector import (
     TextSelector,
     TextSelectorConfig,
     TextSelectorType,
 )
-from homeassistant.core import callback
 
-from .const import DOMAIN, DATA_CONFIG_ENTRY
+from .const import DATA_CONFIG_ENTRY, DOMAIN
+from .iracingapi import IracingAuthError, IracingConnectionError, irDataClient
 
 _LOGGER = logging.getLogger(__name__)
 
-# TODO adjust the data schema to the data that you need
 STEP_USER_DATA_SCHEMA = vol.Schema(
     {
         vol.Required("username"): TextSelector(
@@ -33,6 +29,14 @@ STEP_USER_DATA_SCHEMA = vol.Schema(
         vol.Required("password"): TextSelector(
             TextSelectorConfig(
                 type=TextSelectorType.PASSWORD, autocomplete="current-password"
+            )
+        ),
+        vol.Required("client_id"): TextSelector(
+            TextSelectorConfig(type=TextSelectorType.TEXT, autocomplete="client-id")
+        ),
+        vol.Required("client_secret"): TextSelector(
+            TextSelectorConfig(
+                type=TextSelectorType.PASSWORD, autocomplete="client-secret"
             )
         ),
         vol.Required("cust_id"): TextSelector(
@@ -59,13 +63,23 @@ OPTIONS_STEP_USER_DATA_SCHEMA = vol.Schema(
                 type=TextSelectorType.PASSWORD, autocomplete="current-password"
             )
         ),
+        vol.Required("client_id"): TextSelector(
+            TextSelectorConfig(type=TextSelectorType.TEXT, autocomplete="client-id")
+        ),
+        vol.Required("client_secret"): TextSelector(
+            TextSelectorConfig(
+                type=TextSelectorType.PASSWORD, autocomplete="client-secret"
+            )
+        ),
     }
 )
 
 
-def validate_iracing_credentials(data) -> None:
-    """Verify credentials"""
-    client = irDataClient(data["username"], data["password"])
+def validate_iracing_credentials(data: dict[str, Any]) -> None:
+    """Verify credentials."""
+    client = irDataClient(
+        data["username"], data["password"], data["client_id"], data["client_secret"]
+    )
     client.check_connection()
 
 
@@ -76,9 +90,9 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
 
     async def async_step_user(
         self, user_input: dict[str, Any] | None = None
-    ) -> FlowResult:
+    ) -> config_entries.ConfigFlowResult:
         """Handle the initial step."""
-        credsAvailable = (
+        creds_available = (
             self.hass.data.get(DOMAIN, {})
             .get(DATA_CONFIG_ENTRY, {})
             .get("credentials_available", False)
@@ -86,14 +100,14 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         errors: dict[str, str] = {}
         if user_input is not None:
             try:
-                if not credsAvailable:
+                if not creds_available:
                     await self.hass.async_add_executor_job(
                         validate_iracing_credentials, user_input
                     )
-                pass
+
             except IracingConnectionError:
                 errors["base"] = "cannot_connect"
-            except IracingAuthError as err:
+            except IracingAuthError:
                 errors["base"] = "invalid_auth"
                 # raise ConfigEntryAuthFailed from err
             except Exception:  # pylint: disable=broad-except
@@ -104,16 +118,17 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                     title=user_input["cust_id"], data=user_input
                 )
 
-        if credsAvailable:
+        if creds_available:
             return self.async_show_form(
                 step_id="user",
                 data_schema=STEP_USER_DATA_SCHEMA_NO_LOGIN,
                 errors=errors,
+
             )
-        else:
-            return self.async_show_form(
-                step_id="user", data_schema=STEP_USER_DATA_SCHEMA, errors=errors
-            )
+
+        return self.async_show_form(
+            step_id="user", data_schema=STEP_USER_DATA_SCHEMA, errors=errors
+        )
 
     @staticmethod
     @callback
@@ -125,13 +140,16 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
 
 
 class OptionsFlowHandler(config_entries.OptionsFlow):
+    """Handle iRacing config entry options."""
+
     def __init__(self, config_entry: config_entries.ConfigEntry) -> None:
         """Initialize options flow."""
-        self.config_entry = config_entry
+
+    #  self.config_entry = config_entry
 
     async def async_step_init(
         self, user_input: dict[str, Any] | None = None
-    ) -> FlowResult:
+    ) -> config_entries.ConfigFlowResult:
         """Manage the options."""
         errors: dict[str, str] = {}
         if user_input is not None:
@@ -141,7 +159,7 @@ class OptionsFlowHandler(config_entries.OptionsFlow):
                 )
             except IracingConnectionError:
                 errors["base"] = "cannot_connect"
-            except IracingAuthError as err:
+            except IracingAuthError:
                 errors["base"] = "invalid_auth"
                 # raise ConfigEntryAuthFailed from err
             except Exception:  # pylint: disable=broad-except

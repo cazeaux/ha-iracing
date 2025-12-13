@@ -12,30 +12,20 @@
             "user": {
                 "data": {
                     "cust_id": "iRacing customer ID",
-                    "enable_road": "road",
-                    "host": "Host",
                     "password": "Password",
-                    "username": "Username"
+                    "username": "Username",
+                    "client_id": "Client ID (password_limited flow)",
+                    "client_secret": "Client Secret (password_limited flow)"
                 },
-                "description": "Enter your iRacing credentials (asked only the first time) and the customer ID of the driver to monitor. This can be found by visiting the My Account page on the iRacing.com Member Site. Look for the five- or six-digit number labeled “Customer ID” in the top-right corner of the page."
+                 "data_description": {
+                    "cust_id": "Your customer ID can be found by visiting the My Account page on the iRacing.com Member Site. Look for the five- or six-digit number labeled \u201cCustomer ID\u201d in the top-right corner of the page",
+                    "password": "Your iRacing password",
+                    "username": "Your iRacing username (email address)",
+                    "client_id": "The client ID and client secret must be obtained by following the instructions here: https://oauth.iracing.com/oauth2/book/password_limited_flow.html",
+                    "client_secret": "The client ID and client secret must be obtained by following the instructions here: https://oauth.iracing.com/oauth2/book/password_limited_flow.html"
+                },              
+                "description": "If this is your first time configuring the integration, please enter your iRacing credentials to proceed. If you have already configured the integration, you can add additional iRacing drivers to observe here."
             }
-        }
-    },
-    "options": {
-        "step": {
-            "init": {
-                "data": {
-                    "password": "Password",
-                    "username": "Username"
-                },
-                "description": "Enter your iRacing credentials. It will apply to all entities."
-            }
-
-        },
-        "error": {
-            "cannot_connect": "Failed to connect",
-            "invalid_auth": "Invalid authentication",
-            "unknown": "Unexpected error"
         }
     },
     "entity": {
@@ -79,6 +69,24 @@
             "driver": {
                 "name": "Driver"
             },
+            "formula_car_laps": {
+                "name": "Formula Car Laps"
+            },
+            "formula_car_licence_ir": {
+                "name": "Formula Car iRating"
+            },
+            "formula_car_licence_sr": {
+                "name": "Formula Car Safety Rating"
+            },
+            "formula_car_starts": {
+                "name": "Formula Car Starts"
+            },
+            "formula_car_top5": {
+                "name": "Formula Car Top 5"
+            },
+            "formula_car_wins": {
+                "name": "Formula Car Wins"
+            },
             "oval_laps": {
                 "name": "Oval Laps"
             },
@@ -97,6 +105,24 @@
             "oval_wins": {
                 "name": "Oval Wins"
             },
+            "road_laps": {
+                "name": "Road Laps"
+            },
+            "road_licence_ir": {
+                "name": "Road iRating"
+            },
+            "road_licence_sr": {
+                "name": "Road Safety Rating"
+            },
+            "road_starts": {
+                "name": "Road Starts"
+            },
+            "road_top5": {
+                "name": "Road Top 5"
+            },
+            "road_wins": {
+                "name": "Road Wins"
+            },
             "sports_car_laps": {
                 "name": "Sports Car Laps"
             },
@@ -114,24 +140,31 @@
             },
             "sports_car_wins": {
                 "name": "Sports Car Wins"
-            },
-            "formula_car_laps": {
-                "name": "Formula Car Laps"
-            },
-            "formula_car_licence_ir": {
-                "name": "Formula Car iRating"
-            },
-            "formula_car_licence_sr": {
-                "name": "Formula Car Safety Rating"
-            },
-            "formula_car_starts": {
-                "name": "Formula Car Starts"
-            },
-            "formula_car_top5": {
-                "name": "Formula Car Top 5"
-            },
-            "formula_car_wins": {
-                "name": "Formula Car Wins"
+            }
+        }
+    },
+    "options": {
+        "error": {
+            "cannot_connect": "Failed to connect",
+            "invalid_auth": "Invalid authentication",
+            "unknown": "Unexpected error"
+        },
+        "step": {
+            "init": {
+                "data": {
+                    "password": "Password",
+                    "username": "Username",
+                    "client_id": "Client ID (password_limited flow)",
+                    "client_secret": "Client Secret (password_limited flow)"
+                },
+                 "data_description": {
+                    "cust_id": "Your customer ID can be found by visiting the My Account page on the iRacing.com Member Site. Look for the five- or six-digit number labeled \u201cCustomer ID\u201d in the top-right corner of the page",
+                    "password": "Your iRacing password",
+                    "username": "Your iRacing username (email address)",
+                    "client_id": "The client ID and client secret must be obtained by following the instructions here: https://oauth.iracing.com/oauth2/book/password_limited_flow.html",
+                    "client_secret": "The client ID and client secret must be obtained by following the instructions here: https://oauth.iracing.com/oauth2/book/password_limited_flow.html"
+                },              
+                "description": "You can update your credentials here, it will apply to all entities."
             }
         }
     }
