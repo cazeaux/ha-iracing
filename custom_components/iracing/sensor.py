@@ -9,40 +9,33 @@ import logging
 from typing import Any
 
 from homeassistant.components.sensor import (
-    DOMAIN as PLATFORM,
-    SensorDeviceClass,
     SensorEntity,
     SensorEntityDescription,
     SensorStateClass,
 )
 from homeassistant.config_entries import ConfigEntry
-from homeassistant.const import CONF_HOST, PERCENTAGE, EntityCategory
+from homeassistant.const import EntityCategory
 from homeassistant.core import HomeAssistant, callback
-from homeassistant.helpers import entity_registry as er
 from homeassistant.helpers.device_registry import DeviceEntryType, DeviceInfo
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.typing import StateType
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 
+from .const import DATA_CONFIG_ENTRY, DOMAIN
 from .coordinator import IracingDataUpdateCoordinator
-from .const import DOMAIN, DATA_CONFIG_ENTRY
 
 _LOGGER = logging.getLogger(__name__)
 
 
 @dataclass
-class IracingSensorRequiredKeysMixin:
-    """Class for Brother entity required keys."""
+class IracingSensorEntityDescription(SensorEntityDescription):
+    """A class that describes sensor entities for the iRacing integration."""
 
-    value: Callable[[any], StateType | datetime]
-
-
-@dataclass
-class IracingSensorEntityDescription(
-    SensorEntityDescription, IracingSensorRequiredKeysMixin
-):
-    """A class that describes sensor entities."""
-
+    # Make `value` optional with a default to avoid dataclass field-order
+    # issues when inheriting from `SensorEntityDescription` (some base
+    # fields have defaults). All descriptions defined below provide a
+    # concrete `value` callable, so `None` is acceptable as a default.
+    value: Callable[[Any], StateType | datetime] | None = None
     attr_fn: Callable[[dict[str, Any]], dict[str, Any]] = lambda _: {}
 
 
@@ -311,7 +304,6 @@ async def async_setup_entry(
 
     await coordinator.async_config_entry_first_refresh()
 
-    sensors = []
     device_info = DeviceInfo(
         identifiers={(DOMAIN, coordinator.data["cust_id"])},
         entry_type=DeviceEntryType.SERVICE,
@@ -320,9 +312,12 @@ async def async_setup_entry(
         name=coordinator.data["name"],
     )
 
-    for description in SENSOR_TYPES:
-        if description.value(coordinator.data) is not None:
-            sensors.append(IracingSensor(coordinator, description, device_info))
+    sensors = [
+        IracingSensor(coordinator, description, device_info)
+        for description in SENSOR_TYPES
+        if description.value(coordinator.data) is not None
+    ]
+
     async_add_entities(sensors, False)
 
 

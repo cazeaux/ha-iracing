@@ -1,28 +1,26 @@
-"""Data update coordinator for the Pronote integration."""
+"""Data update coordinator for the iRacing integration."""
 
 from __future__ import annotations
 
-from datetime import date, timedelta
+from datetime import timedelta
+import logging
 from typing import Any
 
-import logging
-
 from homeassistant.config_entries import ConfigEntry
-from homeassistant.const import Platform
 from homeassistant.core import HomeAssistant
-from homeassistant.helpers.update_coordinator import DataUpdateCoordinator
+from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
 
 from .const import DEFAULT_REFRESH_INTERVAL
 
 _LOGGER = logging.getLogger(__name__)
 
 
-class IracingDataUpdateCoordinator(DataUpdateCoordinator):
+class IracingDataUpdateCoordinator(DataUpdateCoordinator[dict[str, Any]]):
     """Data update coordinator for the iRacing integration."""
 
     config_entry: ConfigEntry
 
-    def __init__(self, hass: HomeAssistant, entry: ConfigEntry, api) -> None:
+    def __init__(self, hass: HomeAssistant, entry: ConfigEntry, api: Any) -> None:
         """Initialize the coordinator."""
         super().__init__(
             hass=hass,
@@ -35,11 +33,11 @@ class IracingDataUpdateCoordinator(DataUpdateCoordinator):
         self.config_entry = entry
         self.api = api
 
-    async def _async_update_data(self) -> dict[Platform, dict[str, Any]]:
-        """Get the latest data from iRacing and updates the state."""
+    async def _async_update_data(self) -> dict[str, Any]:
+        """Get the latest data from iRacing and update the state."""
 
         data = self.config_entry.data
-        res = {
+        res: dict[str, Any] = {
             "cust_id": data["cust_id"],
             "sports_car_licence_ir": None,
             "sports_car_licence_sr": None,
@@ -77,8 +75,8 @@ class IracingDataUpdateCoordinator(DataUpdateCoordinator):
         client = self.api
 
         if client is None:
-            _LOGGER.error("Unable to init iracing client")
-            return None
+            _LOGGER.error("Unable to initialize iRacing client")
+            raise UpdateFailed("iRacing client not available")
 
         try:
             member_info = await self.hass.async_add_executor_job(
@@ -171,7 +169,8 @@ class IracingDataUpdateCoordinator(DataUpdateCoordinator):
             res["name"] = member_info["members"][0]["display_name"]
             res["recent_results"] = {"recent_results": recent_results["races"][:5]}
 
-        except Exception as ex:
-            _LOGGER.info("Error getting member info from iracing: %s", ex)
+        except Exception as ex:  # pylint: disable=broad-except
+            _LOGGER.exception("Error getting member info from iRacing")
+            raise UpdateFailed("Error fetching iRacing data") from ex
 
         return res
